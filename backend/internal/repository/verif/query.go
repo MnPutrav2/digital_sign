@@ -1,0 +1,6 @@
+package verifRepository
+
+var (
+	// query = 
+)
+	
