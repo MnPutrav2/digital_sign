@@ -22,7 +22,7 @@ type signService struct {
 }
 
 type SignService interface {
-	Signer(ctx context.Context, file multipart.File, x, y string, private *rsa.PrivateKey, public *rsa.PublicKey) (bytes.Buffer, error)
+	Signer(ctx context.Context, file multipart.File, x, y, page string, private *rsa.PrivateKey, public *rsa.PublicKey) (bytes.Buffer, error)
 }
 
 func InitSignService(repo signRepository.SignRepository) SignService {
@@ -31,7 +31,7 @@ func InitSignService(repo signRepository.SignRepository) SignService {
 
 // Entry
 
-func (s *signService) Signer(ctx context.Context, file multipart.File, x, y string, private *rsa.PrivateKey, public *rsa.PublicKey) (bytes.Buffer, error) {
+func (s *signService) Signer(ctx context.Context, file multipart.File, x, y, page string, private *rsa.PrivateKey, public *rsa.PublicKey) (bytes.Buffer, error) {
 	// Generate qr code
 	qrBytes, err := pkg.GenerateQR("https://yourdomain.com/verify/123")
 	if err != nil {
@@ -56,7 +56,7 @@ func (s *signService) Signer(ctx context.Context, file multipart.File, x, y stri
 	}
 
 	var qg bytes.Buffer
-	if err := api.AddWatermarks(bytes.NewReader(buf.Bytes()), &qg, nil, wm, nil); err != nil {
+	if err := api.AddWatermarks(bytes.NewReader(buf.Bytes()), &qg, []string{page}, wm, nil); err != nil {
 		return bytes.Buffer{}, err
 	}
 

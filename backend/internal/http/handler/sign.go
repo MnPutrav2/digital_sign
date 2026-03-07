@@ -19,13 +19,14 @@ func Sign(serv signService.SignService, publickey *rsa.PublicKey, privateKey *rs
 
 		x := r.FormValue("x")
 		y := r.FormValue("y")
+		page := r.FormValue("page")
 		file, _, err := r.FormFile("file")
 		if err != nil {
 			response.Message("failed decode body", err.Error(), "WARN", http.StatusBadRequest, w, r)
 			return
 		}
 
-		buf, err := serv.Signer(ctx, file, x, y, privateKey, publickey)
+		buf, err := serv.Signer(ctx, file, x, y, page, privateKey, publickey)
 		if err != nil {
 			response.Message("error", err.Error(), "WARN", http.StatusBadRequest, w, r)
 			return
