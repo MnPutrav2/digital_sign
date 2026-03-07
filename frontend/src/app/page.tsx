@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import { useState } from "react";
 import PointToPixel from "../../util/pointToPixel";
 
-const Viewer = dynamic(() => import("../components/viewer"), {
+const Viewer = dynamic(() => import("./signer/viewer"), {
   ssr: false,
 });
 
@@ -66,7 +66,7 @@ export default function Page() {
             <label htmlFor="">Point Y = </label><input type="number" value={y} onChange={(e) => setY(parseInt(e.target.value))} />
             <div className="w-[50%] h-[50%] overflow-scroll flex justify-center bg-gray-200">
               <div className="relative">
-                <Viewer path={fileUrl} pg={1}/>
+                <Viewer path={fileUrl}/>
                 <Sign x={PointToPixel(x)} y={PointToPixel(y)} />
               </div>
             </div>
