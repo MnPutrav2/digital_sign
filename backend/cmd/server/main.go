@@ -9,6 +9,7 @@ import (
 
 	"github.com/MnPutrav2/go_architecture/config"
 	"github.com/MnPutrav2/go_architecture/internal/http/handler"
+	passphraseModel "github.com/MnPutrav2/go_architecture/internal/model/passphrase"
 	signModel "github.com/MnPutrav2/go_architecture/internal/model/sign"
 	signRepository "github.com/MnPutrav2/go_architecture/internal/repository/sign"
 	verifRepository "github.com/MnPutrav2/go_architecture/internal/repository/verif"
@@ -45,6 +46,7 @@ func main() {
 
 	query.InitDB(db).Migrate(
 		signModel.Sign{},
+		passphraseModel.Passphrase{},
 	)
 
 	listen := os.Getenv("LISTEN_PROD")
